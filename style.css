@@ -23,6 +23,7 @@ body, html {
 
 #countdown {
     font-size: 40px;
+    cursor: pointer;
 }
 
 button {
