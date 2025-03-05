@@ -9,6 +9,8 @@
             text-align: center;
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
+            background-size: cover;
+            background-position: center;
         }
         #countdown {
             font-size: 40px;
@@ -45,6 +47,9 @@
         <label for="font-color">文字色:</label>
         <input type="color" id="font-color" value="#000000">
         <br>
+        <label for="background-image">背景画像:</label>
+        <input type="file" id="background-image" accept="image/*">
+        <br>
         <button id="save-settings">保存</button>
     </div>
 
@@ -59,11 +64,13 @@
             const fontSizeInput = document.getElementById("font-size");
             const fontFamilyInput = document.getElementById("font-family");
             const fontColorInput = document.getElementById("font-color");
+            const backgroundImageInput = document.getElementById("background-image");
             
             let targetTime = localStorage.getItem("targetTime") || "";
             let fontSize = localStorage.getItem("fontSize") || "40";
             let fontFamily = localStorage.getItem("fontFamily") || "Arial";
             let fontColor = localStorage.getItem("fontColor") || "#000000";
+            let backgroundImage = localStorage.getItem("backgroundImage") || "";
             
             function updateCountdown() {
                 if (!targetTime) return;
@@ -85,6 +92,9 @@
                 countdownElement.style.fontSize = fontSize + "px";
                 countdownElement.style.fontFamily = fontFamily;
                 countdownElement.style.color = fontColor;
+                if (backgroundImage) {
+                    document.body.style.backgroundImage = `url(${backgroundImage})`;
+                }
             }
             
             openSettingsButton.addEventListener("click", () => {
@@ -104,7 +114,19 @@
                 localStorage.setItem("fontSize", fontSize);
                 localStorage.setItem("fontFamily", fontFamily);
                 localStorage.setItem("fontColor", fontColor);
-                applySettings();
+                
+                if (backgroundImageInput.files.length > 0) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        backgroundImage = e.target.result;
+                        localStorage.setItem("backgroundImage", backgroundImage);
+                        applySettings();
+                    };
+                    reader.readAsDataURL(backgroundImageInput.files[0]);
+                } else {
+                    applySettings();
+                }
+                
                 settingsDiv.style.display = "none";
             });
             
