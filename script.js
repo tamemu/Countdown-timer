@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const backgroundImageInput = document.getElementById("background-image");
     const backgroundElement = document.getElementById("background");
 
-    let targetTime = localStorage.getItem("targetTime") || "";
+    let targetTime = localStorage.getItem("targetTime") || "2025-07-05T04:18";
     let fontSize = localStorage.getItem("fontSize") || "40";
     let fontFamily = localStorage.getItem("fontFamily") || "Arial";
     let backgroundImage = localStorage.getItem("backgroundImage") || "";
