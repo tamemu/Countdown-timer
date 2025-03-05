@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const backgroundElement = document.getElementById("background");
 
     let targetTime = localStorage.getItem("targetTime") || "";
-    let fontSize = localStorage.getItem("fontSize") || "40";
+    let fontSize = localStorage.getItem("fontSize") || "70";
     let fontFamily = localStorage.getItem("fontFamily") || "Arial";
     let backgroundImage = localStorage.getItem("backgroundImage") || "";
 
