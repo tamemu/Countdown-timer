@@ -19,72 +19,20 @@
             border: 5px solid transparent;
             display: inline-block;
         }
-        #settings {
-            margin-top: 20px;
-        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat&family=Pacifico&family=Courier+Prime&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="countdown"></div>
-    <button id="open-settings">設定</button>
     
-    <div id="settings" style="display: none;">
-        <label for="target-time">目標日時:</label>
-        <input type="datetime-local" id="target-time">
-        <br>
-        <label for="font-size">フォントサイズ:</label>
-        <input type="number" id="font-size" value="40">
-        <br>
-        <label for="font-family">フォント:</label>
-        <select id="font-family">
-            <option value="Arial">Arial</option>
-            <option value="Verdana">Verdana</option>
-            <option value="Times New Roman">Times New Roman</option>
-            <option value="Roboto">Roboto</option>
-            <option value="Montserrat">Montserrat</option>
-            <option value="Pacifico">Pacifico</option>
-            <option value="Courier Prime">Courier Prime</option>
-        </select>
-        <br>
-        <label for="font-color">文字色:</label>
-        <input type="color" id="font-color" value="#000000">
-        <br>
-        <label for="border-color">文字枠の色:</label>
-        <input type="color" id="border-color" value="#000000">
-        <br>
-        <label for="background-image">背景画像:</label>
-        <input type="file" id="background-image" accept="image/*">
-        <br>
-        <button id="save-settings">保存</button>
-    </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const countdownElement = document.getElementById("countdown");
-            const openSettingsButton = document.getElementById("open-settings");
-            const saveSettingsButton = document.getElementById("save-settings");
-            const settingsDiv = document.getElementById("settings");
-            
-            const targetTimeInput = document.getElementById("target-time");
-            const fontSizeInput = document.getElementById("font-size");
-            const fontFamilyInput = document.getElementById("font-family");
-            const fontColorInput = document.getElementById("font-color");
-            const borderColorInput = document.getElementById("border-color");
-            const backgroundImageInput = document.getElementById("background-image");
-            
-            let targetTime = localStorage.getItem("targetTime") || "";
-            let fontSize = localStorage.getItem("fontSize") || "40";
-            let fontFamily = localStorage.getItem("fontFamily") || "Arial";
-            let fontColor = localStorage.getItem("fontColor") || "#000000";
-            let borderColor = localStorage.getItem("borderColor") || "#000000";
-            let backgroundImage = localStorage.getItem("backgroundImage") || "";
+            const targetTime = new Date("2025-07-05T04:18:00");
             
             function updateCountdown() {
-                if (!targetTime) return;
                 const now = new Date();
-                const targetDate = new Date(targetTime);
-                const diff = targetDate - now;
+                const diff = targetTime - now;
                 if (diff <= 0) {
                     countdownElement.textContent = "00日 00時間 00分 00秒";
                     return;
@@ -96,54 +44,8 @@
                 countdownElement.textContent = `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
             }
             
-            function applySettings() {
-                countdownElement.style.fontSize = fontSize + "px";
-                countdownElement.style.fontFamily = fontFamily;
-                countdownElement.style.color = fontColor;
-                countdownElement.style.borderColor = borderColor;
-                if (backgroundImage) {
-                    document.body.style.backgroundImage = `url(${backgroundImage})`;
-                }
-            }
-            
-            openSettingsButton.addEventListener("click", () => {
-                settingsDiv.style.display = "block";
-                targetTimeInput.value = targetTime;
-                fontSizeInput.value = fontSize;
-                fontFamilyInput.value = fontFamily;
-                fontColorInput.value = fontColor;
-                borderColorInput.value = borderColor;
-            });
-            
-            saveSettingsButton.addEventListener("click", () => {
-                targetTime = targetTimeInput.value;
-                fontSize = fontSizeInput.value;
-                fontFamily = fontFamilyInput.value;
-                fontColor = fontColorInput.value;
-                borderColor = borderColorInput.value;
-                localStorage.setItem("targetTime", targetTime);
-                localStorage.setItem("fontSize", fontSize);
-                localStorage.setItem("fontFamily", fontFamily);
-                localStorage.setItem("fontColor", fontColor);
-                localStorage.setItem("borderColor", borderColor);
-                
-                if (backgroundImageInput.files.length > 0) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        backgroundImage = e.target.result;
-                        localStorage.setItem("backgroundImage", backgroundImage);
-                        applySettings();
-                    };
-                    reader.readAsDataURL(backgroundImageInput.files[0]);
-                } else {
-                    applySettings();
-                }
-                
-                settingsDiv.style.display = "none";
-            });
-            
             setInterval(updateCountdown, 1000);
-            applySettings();
+            updateCountdown();
         });
     </script>
 </body>
