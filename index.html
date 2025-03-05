@@ -8,7 +8,7 @@
         body {
             text-align: center;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-image: url('/mnt/data/u4851777131_A_highly_detailed_and_dramatic_illustration_of_a__50df4ea3-95bd-4409-aaf0-ded327bfec5e_2.png');
             background-size: cover;
             background-position: center;
         }
@@ -16,18 +16,28 @@
             font-size: 40px;
             margin-top: 20vh;
             padding: 10px;
-            border: 5px solid transparent;
+            border: 5px solid white;
             display: inline-block;
+            color: black;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
+        }
+        #font-size-container {
+            margin-top: 20px;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat&family=Pacifico&family=Courier+Prime&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="countdown"></div>
+    <div id="font-size-container">
+        <label for="font-size">フォントサイズ:</label>
+        <input type="number" id="font-size" value="40" min="10" max="100">
+    </div>
     
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const countdownElement = document.getElementById("countdown");
+            const fontSizeInput = document.getElementById("font-size");
             const targetTime = new Date("2025-07-05T04:18:00");
             
             function updateCountdown() {
@@ -43,6 +53,10 @@
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 countdownElement.textContent = `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
             }
+            
+            fontSizeInput.addEventListener("input", () => {
+                countdownElement.style.fontSize = fontSizeInput.value + "px";
+            });
             
             setInterval(updateCountdown, 1000);
             updateCountdown();
