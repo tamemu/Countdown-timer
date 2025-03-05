@@ -14,6 +14,7 @@
             font-size: 40px;
             margin-top: 20vh;
             cursor: pointer;
+            white-space: pre-line; /* 改行を有効にする */
         }
         #settings {
             margin-top: 20px;
@@ -111,14 +112,14 @@
                 const targetDate = new Date(targetTime);
                 const diff = targetDate - now;
                 if (diff <= 0) {
-                    countdownElement.textContent = "00日 00時間 00分 00秒";
+                    countdownElement.textContent = "00日\n00時間 00分 00秒";
                     return;
                 }
                 const days = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                countdownElement.textContent = `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+                countdownElement.textContent = `${days}日\n${hours}時間 ${minutes}分 ${seconds}秒`;
             }
             
             function applySettings() {
