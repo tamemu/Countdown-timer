@@ -4,40 +4,113 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>カウントダウンタイマー</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #countdown {
+            font-size: 40px;
+            margin-top: 20vh;
+        }
+        #settings {
+            margin-top: 20px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat&family=Pacifico&family=Courier+Prime&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="background"></div>
-    <div class="container">
-        <h1 id="countdown">00日 00時間 00分 00秒</h1>
-        <button id="open-settings">設定</button>
+    <div id="countdown"></div>
+    <button id="open-settings">設定</button>
+    
+    <div id="settings" style="display: none;">
+        <label for="target-time">目標日時:</label>
+        <input type="datetime-local" id="target-time">
+        <br>
+        <label for="font-size">フォントサイズ:</label>
+        <input type="number" id="font-size" value="40">
+        <br>
+        <label for="font-family">フォント:</label>
+        <select id="font-family">
+            <option value="Arial">Arial</option>
+            <option value="Verdana">Verdana</option>
+            <option value="Times New Roman">Times New Roman</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Montserrat">Montserrat</option>
+            <option value="Pacifico">Pacifico</option>
+            <option value="Courier Prime">Courier Prime</option>
+        </select>
+        <br>
+        <label for="font-color">文字色:</label>
+        <input type="color" id="font-color" value="#000000">
+        <br>
+        <button id="save-settings">保存</button>
     </div>
 
-    <!-- 設定画面 -->
-    <div id="settings-modal" class="modal">
-        <div class="modal-content">
-            <h2>設定</h2>
-            <label>目標日時:</label>
-            <input type="datetime-local" id="target-time"><br>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const countdownElement = document.getElementById("countdown");
+            const openSettingsButton = document.getElementById("open-settings");
+            const saveSettingsButton = document.getElementById("save-settings");
+            const settingsDiv = document.getElementById("settings");
             
-            <label>フォントサイズ:</label>
-            <input type="number" id="font-size" min="10" max="100" value="40"> px<br>
-
-            <label>フォント選択:</label>
-            <select id="font-family">
-                <option value="Arial">Arial</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Courier New">Courier New</option>
-            </select><br>
-
-            <label>背景画像:</label>
-            <input type="file" id="background-image" accept="image/*"><br>
-
-            <button id="save-settings">保存</button>
-            <button id="close-settings">閉じる</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
+            const targetTimeInput = document.getElementById("target-time");
+            const fontSizeInput = document.getElementById("font-size");
+            const fontFamilyInput = document.getElementById("font-family");
+            const fontColorInput = document.getElementById("font-color");
+            
+            let targetTime = localStorage.getItem("targetTime") || "";
+            let fontSize = localStorage.getItem("fontSize") || "40";
+            let fontFamily = localStorage.getItem("fontFamily") || "Arial";
+            let fontColor = localStorage.getItem("fontColor") || "#000000";
+            
+            function updateCountdown() {
+                if (!targetTime) return;
+                const now = new Date();
+                const targetDate = new Date(targetTime);
+                const diff = targetDate - now;
+                if (diff <= 0) {
+                    countdownElement.textContent = "00日 00時間 00分 00秒";
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                countdownElement.textContent = `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
+            }
+            
+            function applySettings() {
+                countdownElement.style.fontSize = fontSize + "px";
+                countdownElement.style.fontFamily = fontFamily;
+                countdownElement.style.color = fontColor;
+            }
+            
+            openSettingsButton.addEventListener("click", () => {
+                settingsDiv.style.display = "block";
+                targetTimeInput.value = targetTime;
+                fontSizeInput.value = fontSize;
+                fontFamilyInput.value = fontFamily;
+                fontColorInput.value = fontColor;
+            });
+            
+            saveSettingsButton.addEventListener("click", () => {
+                targetTime = targetTimeInput.value;
+                fontSize = fontSizeInput.value;
+                fontFamily = fontFamilyInput.value;
+                fontColor = fontColorInput.value;
+                localStorage.setItem("targetTime", targetTime);
+                localStorage.setItem("fontSize", fontSize);
+                localStorage.setItem("fontFamily", fontFamily);
+                localStorage.setItem("fontColor", fontColor);
+                applySettings();
+                settingsDiv.style.display = "none";
+            });
+            
+            setInterval(updateCountdown, 1000);
+            applySettings();
+        });
+    </script>
 </body>
 </html>
