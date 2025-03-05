@@ -9,7 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const fontColorInput = document.getElementById("font-color");
     const textStrokeWidthInput = document.getElementById("text-stroke-width");
     const textStrokeColorInput = document.getElementById("text-stroke-color");
-    const positionInput = document.getElementById("position");
+    const backgroundImageInput = document.getElementById("background-image");
+    const backgroundColorInput = document.getElementById("background-color");
+    const positionXInput = document.getElementById("position-x");
+    const positionYInput = document.getElementById("position-y");
 
     let targetTime = localStorage.getItem("targetTime") || "2025-07-05T04:18";
     let fontSize = localStorage.getItem("fontSize") || "40";
@@ -17,7 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     let fontColor = localStorage.getItem("fontColor") || "#000000";
     let textStrokeWidth = localStorage.getItem("textStrokeWidth") || "0";
     let textStrokeColor = localStorage.getItem("textStrokeColor") || "#000000";
-    let position = localStorage.getItem("position") || "center";
+    let backgroundImage = localStorage.getItem("backgroundImage") || "";
+    let backgroundColor = localStorage.getItem("backgroundColor") || "#ffffff";
+    let positionX = localStorage.getItem("positionX") || "50";
+    let positionY = localStorage.getItem("positionY") || "50";
 
     function updateCountdown() {
         if (!targetTime) return;
@@ -46,17 +52,17 @@ document.addEventListener("DOMContentLoaded", () => {
         countdownElement.style.webkitTextStrokeWidth = textStrokeWidth + "px";
         countdownElement.style.webkitTextStrokeColor = textStrokeColor;
 
-        if (position === "top") {
-            countdownElement.style.position = "absolute";
-            countdownElement.style.top = "10%";
-        } else if (position === "bottom") {
-            countdownElement.style.position = "absolute";
-            countdownElement.style.bottom = "10%";
+        if (backgroundImage) {
+            document.body.style.backgroundImage = `url(${backgroundImage})`;
         } else {
-            countdownElement.style.position = "relative";
-            countdownElement.style.top = "50%";
-            countdownElement.style.transform = "translateY(-50%)";
+            document.body.style.backgroundImage = "";
         }
+        document.body.style.backgroundColor = backgroundColor;
+
+        countdownElement.style.position = "absolute";
+        countdownElement.style.left = `${positionX}%`;
+        countdownElement.style.top = `${positionY}%`;
+        countdownElement.style.transform = "translate(-50%, -50%)";
     }
 
     countdownElement.addEventListener("click", () => {
@@ -67,7 +73,10 @@ document.addEventListener("DOMContentLoaded", () => {
         fontColorInput.value = fontColor;
         textStrokeWidthInput.value = textStrokeWidth;
         textStrokeColorInput.value = textStrokeColor;
-        positionInput.value = position;
+        backgroundImageInput.value = "";
+        backgroundColorInput.value = backgroundColor;
+        positionXInput.value = positionX;
+        positionYInput.value = positionY;
     });
 
     saveSettingsButton.addEventListener("click", () => {
@@ -77,15 +86,34 @@ document.addEventListener("DOMContentLoaded", () => {
         fontColor = fontColorInput.value;
         textStrokeWidth = textStrokeWidthInput.value;
         textStrokeColor = textStrokeColorInput.value;
-        position = positionInput.value;
+        backgroundColor = backgroundColorInput.value;
+        positionX = positionXInput.value;
+        positionY = positionYInput.value;
         localStorage.setItem("targetTime", targetTime);
         localStorage.setItem("fontSize", fontSize);
         localStorage.setItem("fontFamily", fontFamily);
         localStorage.setItem("fontColor", fontColor);
         localStorage.setItem("textStrokeWidth", textStrokeWidth);
         localStorage.setItem("textStrokeColor", textStrokeColor);
-        localStorage.setItem("position", position);
-        applySettings();
+        localStorage.setItem("backgroundColor", backgroundColor);
+        localStorage.setItem("positionX", positionX);
+        localStorage.setItem("positionY", positionY);
+
+        const file = backgroundImageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                backgroundImage = e.target.result;
+                localStorage.setItem("backgroundImage", backgroundImage);
+                applySettings();
+            };
+            reader.readAsDataURL(file);
+        } else {
+            backgroundImage = "";
+            localStorage.setItem("backgroundImage", backgroundImage);
+            applySettings();
+        }
+
         settingsModal.style.display = "none";
     });
 
