@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カウントダウンタイマー</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="background"></div>
+    <div class="container">
+        <h1 id="countdown">00日 00時間 00分 00秒</h1>
+        <button id="open-settings">設定</button>
+    </div>
+
+    <!-- 設定画面 -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <h2>設定</h2>
+            <label>目標日時:</label>
+            <input type="datetime-local" id="target-time"><br>
+            
+            <label>フォントサイズ:</label>
+            <input type="number" id="font-size" min="10" max="100" value="40"> px<br>
+
+            <label>フォント選択:</label>
+            <select id="font-family">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Courier New">Courier New</option>
+            </select><br>
+
+            <label>背景画像:</label>
+            <input type="file" id="background-image" accept="image/*"><br>
+
+            <button id="save-settings">保存</button>
+            <button id="close-settings">閉じる</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
