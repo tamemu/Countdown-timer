@@ -16,6 +16,10 @@
             cursor: pointer;
             white-space: pre-line; /* 改行を有効にする */
         }
+        #target-date {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
         #settings {
             margin-top: 20px;
         }
@@ -23,6 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat&family=Pacifico&family=Courier+Prime&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="target-date"></div>
     <div id="countdown"></div>
     
     <div id="settings" style="display: none;">
@@ -78,6 +83,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const countdownElement = document.getElementById("countdown");
+            const targetDateElement = document.getElementById("target-date");
             const saveSettingsButton = document.getElementById("save-settings");
             const cancelSettingsButton = document.getElementById("cancel-settings");
             const settingsDiv = document.getElementById("settings");
@@ -120,6 +126,13 @@
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
                 countdownElement.textContent = `${days}日\n${hours}時間 ${minutes}分 ${seconds}秒`;
+            }
+            
+            function updateTargetDate() {
+                if (!targetTime) return;
+                const targetDate = new Date(targetTime);
+                const formattedDate = `${targetDate.getFullYear()}年${targetDate.getMonth() + 1}月${targetDate.getDate()}日`;
+                targetDateElement.textContent = `目標日: ${formattedDate} あと`;
             }
             
             function applySettings() {
@@ -195,6 +208,7 @@
                     applySettings();
                 }
 
+                updateTargetDate();
                 settingsDiv.style.display = "none";
             });
 
@@ -204,6 +218,7 @@
             
             setInterval(updateCountdown, 1000);
             applySettings();
+            updateTargetDate();
         });
     </script>
 </body>
