@@ -15,6 +15,9 @@
         #countdown {
             font-size: 40px;
             margin-top: 20vh;
+            padding: 10px;
+            border: 5px solid transparent;
+            display: inline-block;
         }
         #settings {
             margin-top: 20px;
@@ -47,6 +50,9 @@
         <label for="font-color">文字色:</label>
         <input type="color" id="font-color" value="#000000">
         <br>
+        <label for="border-color">文字枠の色:</label>
+        <input type="color" id="border-color" value="#000000">
+        <br>
         <label for="background-image">背景画像:</label>
         <input type="file" id="background-image" accept="image/*">
         <br>
@@ -64,12 +70,14 @@
             const fontSizeInput = document.getElementById("font-size");
             const fontFamilyInput = document.getElementById("font-family");
             const fontColorInput = document.getElementById("font-color");
+            const borderColorInput = document.getElementById("border-color");
             const backgroundImageInput = document.getElementById("background-image");
             
             let targetTime = localStorage.getItem("targetTime") || "";
             let fontSize = localStorage.getItem("fontSize") || "40";
             let fontFamily = localStorage.getItem("fontFamily") || "Arial";
             let fontColor = localStorage.getItem("fontColor") || "#000000";
+            let borderColor = localStorage.getItem("borderColor") || "#000000";
             let backgroundImage = localStorage.getItem("backgroundImage") || "";
             
             function updateCountdown() {
@@ -92,6 +100,7 @@
                 countdownElement.style.fontSize = fontSize + "px";
                 countdownElement.style.fontFamily = fontFamily;
                 countdownElement.style.color = fontColor;
+                countdownElement.style.borderColor = borderColor;
                 if (backgroundImage) {
                     document.body.style.backgroundImage = `url(${backgroundImage})`;
                 }
@@ -103,6 +112,7 @@
                 fontSizeInput.value = fontSize;
                 fontFamilyInput.value = fontFamily;
                 fontColorInput.value = fontColor;
+                borderColorInput.value = borderColor;
             });
             
             saveSettingsButton.addEventListener("click", () => {
@@ -110,10 +120,12 @@
                 fontSize = fontSizeInput.value;
                 fontFamily = fontFamilyInput.value;
                 fontColor = fontColorInput.value;
+                borderColor = borderColorInput.value;
                 localStorage.setItem("targetTime", targetTime);
                 localStorage.setItem("fontSize", fontSize);
                 localStorage.setItem("fontFamily", fontFamily);
                 localStorage.setItem("fontColor", fontColor);
+                localStorage.setItem("borderColor", borderColor);
                 
                 if (backgroundImageInput.files.length > 0) {
                     const reader = new FileReader();
