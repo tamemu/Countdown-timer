@@ -4,63 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>カウントダウンタイマー</title>
-    <style>
-        body {
-            text-align: center;
-            font-family: Arial, sans-serif;
-            background-image: url('images/2025_7_5.png');
-            background-size: cover;
-            background-position: center;
-        }
-        #countdown {
-            font-size: 70px;
-            margin-top: 20vh;
-            padding: 10px;
-            border: 5px solid white;
-            display: inline-block;
-            color: black;
-            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.8);
-        }
-        #font-size-container {
-            margin-top: 20px;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Montserrat&family=Pacifico&family=Courier+Prime&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="countdown"></div>
-    <div id="font-size-container">
-        <label for="font-size">フォントサイズ:</label>
-        <input type="number" id="font-size" value="70" min="10" max="100">
+    <div id="background"></div>
+    <div class="container">
+        <h1 id="countdown">00日 00時間 00分 00秒</h1>
+        <button id="open-settings">設定</button>
     </div>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const countdownElement = document.getElementById("countdown");
-            const fontSizeInput = document.getElementById("font-size");
-            const targetTime = new Date("2025-07-05T04:18:00");
+
+    <!-- 設定画面 -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <h2>設定</h2>
+            <label>目標日時:</label>
+            <input type="datetime-local" id="target-time"><br>
             
-            function updateCountdown() {
-                const now = new Date();
-                const diff = targetTime - now;
-                if (diff <= 0) {
-                    countdownElement.textContent = "00日 00時間 00分 00秒";
-                    return;
-                }
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                countdownElement.textContent = `${days}日 ${hours}時間 ${minutes}分 ${seconds}秒`;
-            }
-            
-            fontSizeInput.addEventListener("input", () => {
-                countdownElement.style.fontSize = fontSizeInput.value + "px";
-            });
-            
-            setInterval(updateCountdown, 1000);
-            updateCountdown();
-        });
-    </script>
+            <label>フォントサイズ:</label>
+            <input type="number" id="font-size" min="10" max="100" value="40"> px<br>
+
+            <label>フォント選択:</label>
+            <select id="font-family">
+                <option value="Arial">Arial</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Courier New">Courier New</option>
+            </select><br>
+
+            <label>背景画像:</label>
+            <input type="file" id="background-image" accept="image/*"><br>
+
+            <button id="save-settings">保存</button>
+            <button id="close-settings">閉じる</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
