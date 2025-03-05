@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let fontColor = localStorage.getItem("fontColor") || "#000000";
     let textStrokeWidth = localStorage.getItem("textStrokeWidth") || "0";
     let textStrokeColor = localStorage.getItem("textStrokeColor") || "#000000";
-    let backgroundImage = localStorage.getItem("backgroundImage") || "https://github.com/tamemu/Countdown-timer/blob/2a1ca37ecacec4bf3d7225f04ef13fffd4355b3c/images/2025_7_5.png";
+    let backgroundImage = localStorage.getItem("backgroundImage") || "images/2025_7_5.png";
     let backgroundColor = localStorage.getItem("backgroundColor") || "#ffffff";
     let positionX = localStorage.getItem("positionX") || "50";
     let positionY = localStorage.getItem("positionY") || "50";
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
             };
             reader.readAsDataURL(file);
         } else {
-            backgroundImage = localStorage.getItem("backgroundImage") || "https://github.com/tamemu/Countdown-timer/blob/2a1ca37ecacec4bf3d7225f04ef13fffd4355b3c/images/2025_7_5.png";
+            backgroundImage = localStorage.getItem("backgroundImage") || "images/2025_7_5.png";
             localStorage.setItem("backgroundImage", backgroundImage);
             applySettings();
         }
