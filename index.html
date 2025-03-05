@@ -29,7 +29,7 @@
         <input type="datetime-local" id="target-time">
         <br>
         <label for="font-size">フォントサイズ:</label>
-        <input type="number" id="font-size" value="40">
+        <input type="number" id="font-size" value="40" min="1" step="1">
         <br>
         <label for="font-family">フォント:</label>
         <select id="font-family">
@@ -51,13 +51,13 @@
         <input type="color" id="font-color" value="#000000">
         <br>
         <label for="text-stroke-width">縁取りの太さ:</label>
-        <input type="number" id="text-stroke-width" value="0">
+        <input type="number" id="text-stroke-width" value="0" min="0" step="1">
         <br>
         <label for="text-stroke-color">縁取りの色:</label>
         <input type="color" id="text-stroke-color" value="#000000">
         <br>
         <label for="font-weight">文字の太さ:</label>
-        <input type="number" id="font-weight" value="400">
+        <input type="number" id="font-weight" value="400" min="100" max="900" step="100">
         <br>
         <label for="background-image">背景画像:</label>
         <input type="file" id="background-image" accept="image/*">
@@ -66,9 +66,9 @@
         <input type="color" id="background-color" value="#ffffff">
         <br>
         <label for="position-x">X座標:</label>
-        <input type="number" id="position-x" value="50">
+        <input type="number" id="position-x" value="50" min="0" max="100" step="1">
         <label for="position-y">Y座標:</label>
-        <input type="number" id="position-y" value="50">
+        <input type="number" id="position-y" value="50" min="0" max="100" step="1">
         <br>
         <button id="save-settings">保存</button>
         <button id="cancel-settings">キャンセル</button>
@@ -131,10 +131,11 @@
 
                 if (backgroundImage) {
                     document.body.style.backgroundImage = `url(${backgroundImage})`;
+                    document.body.style.backgroundColor = "";
                 } else {
                     document.body.style.backgroundImage = "";
+                    document.body.style.backgroundColor = backgroundColor;
                 }
-                document.body.style.backgroundColor = backgroundColor;
 
                 countdownElement.style.position = "absolute";
                 countdownElement.style.left = `${positionX}%`;
@@ -188,6 +189,8 @@
                     };
                     reader.readAsDataURL(file);
                 } else {
+                    backgroundImage = "";
+                    localStorage.setItem("backgroundImage", backgroundImage);
                     applySettings();
                 }
 
