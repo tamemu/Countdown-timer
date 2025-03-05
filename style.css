@@ -23,7 +23,9 @@ body, html {
 }
 
 #countdown {
-    font-size: 40px;
+    font-size: 60px;
+    color: black; /* 文字色を黒に設定 */
+    text-shadow: 2px 2px 0px white; /* 白の縁取りを追加 */
 }
 
 button {
