@@ -24,6 +24,7 @@ body, html {
 #countdown {
     font-size: 40px;
     cursor: pointer;
+    white-space: pre-line; /* 改行を有効にする */
 }
 
 button {
