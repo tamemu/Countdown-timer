@@ -47,6 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    countdownElement.addEventListener("click", () => {
+    settingsModal.style.display = "block";
+    targetTimeInput.value = targetTime;
+    fontSizeInput.value = fontSize;
+    fontFamilyInput.value = fontFamily;
+    fontColorInput.value = fontColor;
+    textStrokeWidthInput.value = textStrokeWidth;
+    textStrokeColorInput.value = textStrokeColor;
+});
+
     openSettingsButton.addEventListener("click", () => {
         settingsModal.style.display = "block";
         targetTimeInput.value = targetTime;
