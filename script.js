@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function applySettings() {
         countdownElement.style.fontSize = fontSize + "px";
         countdownElement.style.fontFamily = fontFamily;
+        countdownElement.style.color = fontColor;
+        countdownElement.style.webkitTextStrokeWidth = textStrokeWidth + "px";
+        countdownElement.style.webkitTextStrokeColor = textStrokeColor;
         if (backgroundImage) {
             backgroundElement.style.backgroundImage = `url(${backgroundImage})`;
         }
